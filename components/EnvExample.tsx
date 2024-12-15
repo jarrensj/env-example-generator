@@ -21,7 +21,7 @@ export default function EnvExample() {
   const generateExample = () => {
     const lines = input.split("\n")
     const sampleLines = lines.map(line => {
-      const [key, value] = line.split("=")
+      const [key] = line.split("=")
       return key ? `${key.trim()}=` : line
     })
     setOutput(sampleLines.join("\n"))
