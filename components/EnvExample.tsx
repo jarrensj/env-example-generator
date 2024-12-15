@@ -34,6 +34,21 @@ export default function EnvExample() {
     }
   }
 
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(output)
+      if (jsConfettiRef.current) {
+        jsConfettiRef.current.addConfetti({
+          emojis: ['📋'],
+          emojiSize: 100,
+          confettiNumber: 24,
+        })
+      }
+    } catch (err) {
+      console.error('Failed to copy text: ', err)
+    }
+  }
+
   return (
     <div className="w-full max-w-4xl">
       <Card>
@@ -52,13 +67,22 @@ export default function EnvExample() {
             Generate Example
           </Button>
           {output && (
-            <>
+            <div className="space-y-2">
               <Textarea
                 value={output}
                 readOnly
                 className="min-h-[200px] bg-muted text-muted-foreground"
               />
-            </>
+              <div className="flex justify-end">
+                <Button 
+                  onClick={copyToClipboard}
+                  variant="outline"
+                  size="sm"
+                >
+                  Copy to Clipboard
+                </Button>
+              </div>
+            </div>
           )}
         </CardContent>
       </Card>
