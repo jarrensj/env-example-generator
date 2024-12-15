@@ -61,7 +61,7 @@ export default function EnvExample() {
             placeholder="Paste your .env content here..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="min-h-[200px] mb-4"
+            className="min-h-[200px]"
           />
           <Button onClick={generateExample} disabled={!input.trim()}>
             Generate Example
