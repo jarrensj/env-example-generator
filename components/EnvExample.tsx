@@ -1,13 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import JSConfetti from 'js-confetti'
 
 export default function EnvExample() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
+  const jsConfettiRef = useRef<JSConfetti | null>(null)
+
+  useEffect(() => {
+    jsConfettiRef.current = new JSConfetti();
+    return () => {
+      jsConfettiRef.current = null;
+    };
+  }, []);
 
   const generateExample = () => {
     const lines = input.split("\n")
@@ -16,6 +25,13 @@ export default function EnvExample() {
       return key ? `${key.trim()}=` : line
     })
     setOutput(sampleLines.join("\n"))
+    if (jsConfettiRef.current) {
+      jsConfettiRef.current.addConfetti({
+        emojis: ['🚀'],
+        emojiSize: 100,
+        confettiNumber: 24,
+      })
+    }
   }
 
   return (
