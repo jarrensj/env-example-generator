@@ -49,6 +49,26 @@ export default function EnvExample() {
     }
   }
 
+  const downloadExample = () => {
+    const blob = new Blob([output], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'env example file'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+
+    if (jsConfettiRef.current) {
+      jsConfettiRef.current.addConfetti({
+        emojis: ['💾'],
+        emojiSize: 100,
+        confettiNumber: 24,
+      })
+    }
+  }
+
   return (
     <div className="w-full max-w-4xl">
       <Card>
@@ -73,13 +93,20 @@ export default function EnvExample() {
                 readOnly
                 className="min-h-[200px] bg-muted text-muted-foreground"
               />
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-2">
                 <Button 
                   onClick={copyToClipboard}
                   variant="outline"
                   size="sm"
                 >
                   Copy to Clipboard
+                </Button>
+                <Button 
+                  onClick={downloadExample}
+                  variant="outline"
+                  size="sm"
+                >
+                  Download
                 </Button>
               </div>
             </div>
